@@ -13,9 +13,9 @@ Hello, World!`;
 const homePage = `export default function Page() {
   return (
     <section>
-      <h1 className="font-medium text-2xl mb-8 tracking-tighter">my portfolio</h1>
+      <h1 className="font-medium text-2xl mb-8 tracking-tighter">My Portfolio</h1>
       <p className="prose prose-neutral dark:prose-invert">
-        This is your new portfolio.
+        Hi, welcome to my website!
       </p>
     </section>
   );
@@ -25,9 +25,9 @@ const homePage = `export default function Page() {
 const workPage = `export default function Page() {
   return (
     <section>
-      <h1 className="font-medium text-2xl mb-8 tracking-tighter">my work</h1>
+      <h1 className="font-medium text-2xl mb-8 tracking-tighter">Work</h1>
       <p className="prose prose-neutral dark:prose-invert">
-        This is where your work experience goes.
+        Capital One.
       </p>
     </section>
   );
