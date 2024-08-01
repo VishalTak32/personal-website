@@ -1,7 +1,5 @@
 import Head from 'next/head';
-import { Container, Typography, Button, Box } from '@mui/material';
-import Link from 'next/link';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Container, Typography, Box } from '@mui/material';
 import 'swiper/css';
 
 export default function Home() {
@@ -12,40 +10,49 @@ export default function Home() {
         <meta name="description" content="Vishal Tak's personal portfolio website" />
       </Head>
       <main>
-        <Typography variant="h2" component="h1" gutterBottom>
-          Hi, I'm Vishal Tak
-        </Typography>
-        <Typography variant="h5" component="h2" gutterBottom align='center'>
-          Software Developer.
-        </Typography>
-        <Box sx={{ marginTop: 4 }}>
-          <Swiper
-            spaceBetween={50}
-            slidesPerView={1}
-            style={{ height: 'auto' }}
+        <Box
+          sx={{
+            position: 'relative',
+            height: '100vh',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'white',
+            textAlign: 'right',
+            marginLeft: '-100px'
+          }}
+        >
+          <Box
+            sx={{
+              flex: 1,
+              transform: 'translateX(-60%)',
+              position: 'absolute',
+              zIndex: 1
+            }}
           >
-            <SwiperSlide style={{ display: 'flex', justifyContent: 'center' }}>
-              <img 
-                src="/image1.jpg" 
-                alt="Image 1" 
-                style={{ width: '800px', height: 'auto', objectFit: 'cover' }} 
-              />
-            </SwiperSlide>
-            <SwiperSlide style={{ display: 'flex', justifyContent: 'center' }}>
-              <img 
-                src="/image2.jpg" 
-                alt="Image 2" 
-                style={{ width: '500px', height: '600px', objectFit: 'cover' }} 
-              />
-            </SwiperSlide>
-            <SwiperSlide style={{ display: 'flex', justifyContent: 'center' }}>
-              <img 
-                src="/image3.jpg" 
-                alt="Image 3" 
-                style={{ width: '800px', height: 'auto', objectFit: 'cover' }} 
-              />
-            </SwiperSlide>
-          </Swiper>
+            <Typography variant="h2" component="h1" gutterBottom sx={{ textShadow: '4px 4px 6px rgba(0, 0, 0, 0.9)' }}>
+              I like problem solving,
+            </Typography>
+            <Typography variant="h2" component="h1" gutterBottom sx={{ textShadow: '4px 4px 6px rgba(0, 0, 0, 0.9)' }}>
+              with design & code.
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              flex: 1,
+              backgroundImage: 'url(/image3.jpg), radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0.5) 100%)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              position: 'absolute',
+              width: '80%',
+              height: '90%',
+              marginRight: '-400px',
+              opacity: 0.6,
+              padding: '150px 200px',
+              boxSizing: 'border-box',
+              boxShadow: 'inset 0 0 70px 50px black'
+            }}
+          />
         </Box>
       </main>
     </Container>
