@@ -1,7 +1,7 @@
 import { AppBar, Toolbar, Typography, Container, Link as MuiLink, Box } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import styles from '../styles/layout.module.css'
 
 export default function Layout({ children }) {
   const router = useRouter();
@@ -56,21 +56,6 @@ export default function Layout({ children }) {
     }
   };
 
-  // useEffect(() => {
-  //   const handleRouteChange = (url) => {
-  //     if (url === '/') {
-  //       scrollToAboutSection();
-  //     }else if(url === '/contact'){
-  //       scrollToContactSection();
-  //     }
-  //   };
-
-  //   router.events.on('routeChangeComplete', handleRouteChange);
-  //   return () => {
-  //     router.events.off('routeChangeComplete', handleRouteChange);
-  //   };
-  // }, [router]);
-
   return (
     <div>
       <AppBar position="fixed" sx={{ backgroundImage:'none', boxShadow:'none', width: '100%', top: 0, left: 0 }}>
@@ -79,18 +64,18 @@ export default function Layout({ children }) {
         justifyContent: 'center'
       },}}>
           <Box sx={{ display: 'flex', gap: 5 }}>
-            <Link href="/" passHref>
-              <MuiLink color="inherit" sx={{textDecoration: 'none', margin: '0 10px' }} onClick={handleAboutClick}>
+            <Link href="#" passHref className={styles.link}>
+              <MuiLink color="inherit" sx={{textDecoration: 'none'}} onClick={handleAboutClick}>
                 About
               </MuiLink>
             </Link>
-            <Link href="/work" passHref>
-              <MuiLink color="inherit" sx={{textDecoration: 'none', margin: '0 10px' }}>
+            <Link href="/work" passHref className={styles.link}>
+              <MuiLink color="inherit" sx={{textDecoration: 'none'}}>
                 Work
               </MuiLink>
             </Link>
-            <Link href="/" passHref>
-              <MuiLink color="inherit" sx={{textDecoration: 'none', margin: '0 10px' }} onClick={handleContactClick}>
+            <Link href="#" passHref className={styles.link}>
+              <MuiLink color="inherit" sx={{textDecoration: 'none'}} onClick={handleContactClick}>
                 Contact
               </MuiLink>
             </Link>

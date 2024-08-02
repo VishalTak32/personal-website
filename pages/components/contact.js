@@ -12,10 +12,10 @@ export default function Contact() {
       </Typography>
     </Box>
     <Box className={styles.imgBox}>
-        <Link href="mailto:vishal.tak14@gmail.com" color="primary" underline="none">
+        <Link href="mailto:vishal.tak14@gmail.com" color="primary" underline="none" className={styles.link}>
           <img  className={styles.imageEmail} src='/email2.png' alt='Email'/>
         </Link>
-        <Link href="https://www.linkedin.com/in/vishal-tak14/" target="_blank" rel="noopener noreferrer">
+        <Link href="https://www.linkedin.com/in/vishal-tak14/" target="_blank" rel="noopener noreferrer" className={styles.link}>
           <img className={styles.imageLinkedIn} src='/linkedin2.png' alt='Linked-In'/>
         </Link>
     </Box>
