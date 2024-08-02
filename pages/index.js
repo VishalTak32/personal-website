@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { Container, Typography, Box } from '@mui/material';
 import About from './components/about';
+import Contact from './components/contact';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
@@ -34,6 +35,9 @@ export default function Home() {
         </Box>
         <Box id="about-section" className={styles.aboutSection}>
           <About />
+        </Box>
+        <Box id="contact-section" className={styles.contactSection}>
+          <Contact />
         </Box>
       </main>
     </Container>

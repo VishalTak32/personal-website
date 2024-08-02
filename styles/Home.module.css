@@ -43,12 +43,12 @@
 
 .background {
   flex: 1;
-  background-image: url('/image3.jpg');
+  background-image: url('/profile-pic.jpeg');
   background-size: cover;
   background-position: center;
   position: absolute;
   width: 100%;
-  height: 90%;
+  height: 100%;
   margin-right: -50%;
   opacity: 0.6;
   padding: 150px 200px;
@@ -65,7 +65,9 @@
 .aboutSection {
   padding-top: 50px;
 }
-
+.contactSection {
+  padding-top: 50px;
+}
 /* Media Queries */
 @media (max-width: 600px) {
   .container {
