@@ -11,10 +11,10 @@ const About = () => {
       </Box>
       <Box sx={{ flex: 3, maxWidth: '800px' }}>
         <Typography variant="body1" paragraph sx={{fontSize: { xs: '12px', sm: '14px', md: '16px', lg: '18px', xl: '20px' }}}>
-          I’m Vishal Tak, a passionate, driven, and creative Full-Stack Software Engineer from Austin, TX currently working at Capital One. I graduated from the University of Texas at Austin 🤘 with a BA in Computer Science, before embarking on my software engineering career with Capital One.
+          I’m Vishal Tak, a passionate, driven, and creative Full-Stack Software Engineer from Austin, TX, currently working at Capital One. I graduated from the University of Texas at Austin 🤘 with a BA in Computer Science before embarking on my software engineering career with Capital One.
         </Typography>
         <Typography variant="body1" paragraph sx={{ fontSize: { xs: '12px', sm: '14px', md: '16px', lg: '18px', xl: '20px' } }}>
-          In my role as a Software Engineer, I excel at solving real-world challenges through collaboration with business teams. I belive that by understanding customer needs, desires, and sentiments, I can deliver well-crafted and effective solutions.
+          In my role as a Software Engineer, I strive to solve real-world problems with the collaboration of business teams. I believe that by understanding customer needs, desires, and sentiments, I can deliver well-catered and effective solutions.
         </Typography>
         <Typography variant="body1" paragraph sx={{ fontSize: { xs: '12px', sm: '14px', md: '16px', lg: '18px', xl: '20px' } }}>
           Outside of work, I am passionate about exploring new technologies and programming languages, as well as staying informed about the latest trends in software development. This continuous learning helps me stay current in the rapidly evolving tech industry and refine my technical skills.

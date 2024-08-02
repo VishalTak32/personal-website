@@ -35,6 +35,14 @@
   font-family: Georgia, sans-serif !important;
   color: #d3d3d3;
   font-size: 4vw;
+  margin-right: 4vw;
+}
+
+.title2 {
+  text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.9);
+  font-family: Georgia, sans-serif !important;
+  color: #d3d3d3;
+  font-size: 4vw;
 }
 
 .titleMobile {
@@ -85,6 +93,11 @@
   }
 
   .title {
+    font-size: 8vw;
+    margin-right: 0vw;
+  }
+  
+  .title2 {
     font-size: 8vw;
   }
 

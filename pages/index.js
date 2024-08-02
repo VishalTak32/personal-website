@@ -26,7 +26,7 @@ export default function Home() {
               variant="h2"
               component="h1"
               gutterBottom
-              className={styles.title}
+              className={styles.title2}
             >
               with creative solutions.
             </Typography>
