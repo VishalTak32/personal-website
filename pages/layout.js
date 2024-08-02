@@ -56,20 +56,20 @@ export default function Layout({ children }) {
     }
   };
 
-  useEffect(() => {
-    const handleRouteChange = (url) => {
-      if (url === '/') {
-        scrollToAboutSection();
-      }else if(url === '/contact'){
-        scrollToContactSection();
-      }
-    };
+  // useEffect(() => {
+  //   const handleRouteChange = (url) => {
+  //     if (url === '/') {
+  //       scrollToAboutSection();
+  //     }else if(url === '/contact'){
+  //       scrollToContactSection();
+  //     }
+  //   };
 
-    router.events.on('routeChangeComplete', handleRouteChange);
-    return () => {
-      router.events.off('routeChangeComplete', handleRouteChange);
-    };
-  }, [router]);
+  //   router.events.on('routeChangeComplete', handleRouteChange);
+  //   return () => {
+  //     router.events.off('routeChangeComplete', handleRouteChange);
+  //   };
+  // }, [router]);
 
   return (
     <div>
@@ -84,12 +84,12 @@ export default function Layout({ children }) {
                 About
               </MuiLink>
             </Link>
-            <Link href="/resume" passHref>
+            <Link href="/work" passHref>
               <MuiLink color="inherit" sx={{textDecoration: 'none', margin: '0 10px' }}>
-                Resume
+                Work
               </MuiLink>
             </Link>
-            <Link href="/contact" passHref>
+            <Link href="/" passHref>
               <MuiLink color="inherit" sx={{textDecoration: 'none', margin: '0 10px' }} onClick={handleContactClick}>
                 Contact
               </MuiLink>

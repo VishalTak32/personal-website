@@ -151,7 +151,7 @@ export default function Resume() {
   return (
     <>
       <Head>
-        <title>Resume - Vishal Tak</title>
+        <title>Work - Vishal Tak</title>
         <meta name="description" content="Vishal Tak's resume" />
       </Head>
       <Sidebar onSectionSelect={setActiveSection} />
