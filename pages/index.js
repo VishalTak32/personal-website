@@ -1,6 +1,8 @@
 import Head from 'next/head';
 import { Container, Typography, Box } from '@mui/material';
-import 'swiper/css';
+import About from './components/about';
+import Contact from './components/contact';
+import styles from '../styles/Home.module.css';
 
 export default function Home() {
   return (
@@ -10,49 +12,32 @@ export default function Home() {
         <meta name="description" content="Vishal Tak's personal portfolio website" />
       </Head>
       <main>
-        <Box
-          sx={{
-            position: 'relative',
-            height: '100vh',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: 'white',
-            textAlign: 'right',
-            marginLeft: '-100px'
-          }}
-        >
-          <Box
-            sx={{
-              flex: 1,
-              transform: 'translateX(-60%)',
-              position: 'absolute',
-              zIndex: 1
-            }}
-          >
-            <Typography variant="h2" component="h1" gutterBottom sx={{ textShadow: '4px 4px 6px rgba(0, 0, 0, 0.9)' }}>
-              I like problem solving,
+        <Box className={styles.container}>
+          <Box className={styles.content}>
+            <Typography
+              variant="h2"
+              component="h1"
+              gutterBottom
+              className={styles.title}
+            >
+              I like solving problems,
             </Typography>
-            <Typography variant="h2" component="h1" gutterBottom sx={{ textShadow: '4px 4px 6px rgba(0, 0, 0, 0.9)' }}>
-              with design & code.
+            <Typography
+              variant="h2"
+              component="h1"
+              gutterBottom
+              className={styles.title}
+            >
+              with creative solutions.
             </Typography>
           </Box>
-          <Box
-            sx={{
-              flex: 1,
-              backgroundImage: 'url(/image3.jpg), radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0.5) 100%)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              position: 'absolute',
-              width: '80%',
-              height: '90%',
-              marginRight: '-400px',
-              opacity: 0.6,
-              padding: '150px 200px',
-              boxSizing: 'border-box',
-              boxShadow: 'inset 0 0 70px 50px black'
-            }}
-          />
+          <Box className={styles.background} />
+        </Box>
+        <Box id="about-section" className={styles.aboutSection}>
+          <About />
+        </Box>
+        <Box id="contact-section" className={styles.contactSection}>
+          <Contact />
         </Box>
       </main>
     </Container>
