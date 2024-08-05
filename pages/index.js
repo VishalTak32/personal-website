@@ -3,6 +3,7 @@ import { Container, Typography, Box } from '@mui/material';
 import About from './components/about';
 import Contact from './components/contact';
 import styles from '../styles/Home.module.css';
+import Experience from './experience';
 
 export default function Home() {
   return (
@@ -33,10 +34,13 @@ export default function Home() {
           </Box>
           <Box className={styles.background} />
         </Box>
-        <Box id="about-section" className={styles.aboutSection}>
+        <Box id="about" className={styles.aboutSection}>
           <About />
         </Box>
-        <Box id="contact-section" className={styles.contactSection}>
+        <Box id="experience" className={styles.experienceSection}>
+          <Experience />
+        </Box>
+        <Box id="contact">
           <Contact />
         </Box>
       </main>

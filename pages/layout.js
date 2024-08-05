@@ -1,81 +1,71 @@
 import { AppBar, Toolbar, Typography, Container, Link as MuiLink, Box } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import styles from '../styles/layout.module.css'
+import styles from '../styles/layout.module.css';
 
 export default function Layout({ children }) {
   const router = useRouter();
 
-  const handleAboutClick = (e) => {
+  const handleNavClick = (e, section, section2) => {
     e.preventDefault();
-    if (router.pathname !== '/') {
-      router.push('/').then(() => {
-        scrollToAboutSection();
-      });
+    if (router.pathname === '/') {
+      history.pushState(null, null, `#${section}`);
+      scrollToSection(section, section2);
     } else {
-      scrollToAboutSection();
+      router.push('/').then(() => {
+        history.pushState(null, null, `#${section}`);
+        scrollToSection(section, section2);
+      });
     }
   };
 
-  const handleContactClick = (e) => {
-    e.preventDefault();
-    if (router.pathname !== '/') {
-      router.push('/').then(() => {
-        scrollToContactSection();
-      });
-    } else {
-      scrollToContactSection();
-    }
-  };
+  const scrollToSection = (from, to) => {
+    const fromSection = document.getElementById(from);
+    const toSection = document.getElementById(to);
 
-  const scrollToContactSection = () =>{
-    const contactSection = document.getElementById('contact-section');
-    if(contactSection){
-      contactSection.scrollIntoView({behavior: 'smooth'});
-    }
-  }
+    if (fromSection) {
+      const fromRect = fromSection.getBoundingClientRect();
+      const scrollToY = fromRect.top + window.scrollY;
 
-  const scrollToAboutSection = () => {
-    const aboutSection = document.getElementById('about-section');
-    const contactSection = document.getElementById('contact-section');
+      if (toSection) {
+        const toRect = toSection.getBoundingClientRect();
+        const stopScrollBeforeTo = toRect.top + window.scrollY - window.innerHeight;
 
-    if (aboutSection && contactSection) {
-      const aboutRect = aboutSection.getBoundingClientRect();
-      const contactRect = contactSection.getBoundingClientRect();
-      
-      const scrollToY = aboutRect.top + window.scrollY;
-
-      // Ensure the bottom of the viewport does not show the contact section
-      const stopScrollBeforeContact = contactRect.top + window.scrollY - window.innerHeight;
-
-      const finalScrollY = Math.min(scrollToY, stopScrollBeforeContact);
-      window.scrollTo({
-        top: finalScrollY,
-        behavior: 'smooth'
-      });
+        const finalScrollY = Math.min(scrollToY, stopScrollBeforeTo);
+        window.scrollTo({
+          top: finalScrollY,
+          behavior: 'smooth'
+        });
+      } else {
+        window.scrollTo({
+          top: scrollToY,
+          behavior: 'smooth'
+        });
+      }
     }
   };
 
   return (
     <div>
-      <AppBar position="fixed" sx={{ backgroundImage:'none', boxShadow:'none', width: '100%', top: 0, left: 0 }}>
+      <AppBar position="fixed" sx={{ backgroundImage: 'none', boxShadow: 'none', width: '100%', top: 0, left: 0 }}>
         <Toolbar sx={{ justifyContent: 'right', 
-      '@media (max-width: 600px)': {
-        justifyContent: 'center'
-      },}}>
+          '@media (max-width: 600px)': {
+            justifyContent: 'center'
+          },
+        }}>
           <Box sx={{ display: 'flex', gap: 5 }}>
-            <Link href="#" passHref className={styles.link}>
-              <MuiLink color="inherit" sx={{textDecoration: 'none'}} onClick={handleAboutClick}>
+            <Link href="#about" passHref scroll={false} className={styles.link}> 
+              <MuiLink color="inherit"  sx={{ textDecoration: 'none' }} onClick={(e) => handleNavClick(e, 'about', 'experience')}>
                 About
               </MuiLink>
             </Link>
-            <Link href="/work" passHref className={styles.link}>
-              <MuiLink color="inherit" sx={{textDecoration: 'none'}}>
-                Work
+            <Link href="#experience" passHref scroll={false} className={styles.link}>
+              <MuiLink color="inherit" sx={{ textDecoration: 'none' }} onClick={(e) => handleNavClick(e, 'experience', 'contact')}>
+                Experience
               </MuiLink>
             </Link>
-            <Link href="#" passHref className={styles.link}>
-              <MuiLink color="inherit" sx={{textDecoration: 'none'}} onClick={handleContactClick}>
+            <Link href="#contact" passHref scroll={false} className={styles.link}>
+              <MuiLink color="inherit" sx={{ textDecoration: 'none' }} onClick={(e) => handleNavClick(e, 'contact', null)}>
                 Contact
               </MuiLink>
             </Link>

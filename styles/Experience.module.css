@@ -1,0 +1,38 @@
+/* styles/Experience.module.css */
+
+  /* Set the chip color to match the primary color from the header */
+  .chip {
+    color: #64a0cd; /* Assuming you want white text */
+    font-weight: bold;
+    font-size: .8rem;
+  }
+  
+  .link {
+    text-decoration: none;
+    margin: 0 10px;
+    transition: transform 0.2s, text-shadow 0.2s;
+  }
+  .link:hover {
+    transform: scale(1.1);
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  .linkBox {
+    display: flex;
+  }
+  
+  /* Small screens (e.g., mobile devices) */
+  @media (max-width: 600px) {
+    .chip {
+      font-size: .7rem !important;
+    }
+  }
+  
+  /* Medium screens (e.g., tablets) */
+  @media (max-width: 960px) {
+    .chip {
+      color: #64a0cd; /* Assuming you want white text */
+      font-weight: bold;
+      font-size: .7rem;
+    }
+  }
+  
