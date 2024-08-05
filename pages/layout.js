@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styles from '../styles/layout.module.css';
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export default function Layout({ children }) {
   const router = useRouter();
@@ -80,6 +81,7 @@ export default function Layout({ children }) {
       >
         {children}
         <Analytics />
+        <SpeedInsights />
       </Container>
     </div>
   );

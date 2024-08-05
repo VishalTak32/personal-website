@@ -4,9 +4,15 @@ import Link from 'next/link';
 
 export default function Contact() {
   return (
-    <Container sx={{ display: 'flex', flexDirection: 'row', padding: '20px', color: '#d3d3d3' }}>
-    <Box sx={{ flex: 1 }}>
-      <Typography variant="h6" component="h1" gutterBottom sx={{ fontSize: { xs: '14px', sm: '16px', md: '18px', lg: '20px', xl: '22px' } }}>
+    <Container sx={{
+      display: 'flex',
+      flexDirection: { xs: 'column', sm: 'row' },
+      padding: '20px',
+      color: '#d3d3d3',
+      alignItems: { xs: 'center', sm: 'flex-start' },
+    }}>
+    <Box sx={{ flex: 1 , textAlign: { xs: 'center', sm: 'left' }}}>
+      <Typography variant="h6" component="h1" gutterBottom sx={{ fontSize: { xs: '16px', sm: '18px', md: '18px', lg: '20px', xl: '22px' } }}>
         Contact
       </Typography>
     </Box>
