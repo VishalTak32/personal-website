@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import { Container, Typography, Box, Card, CardContent, Chip } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Link from 'next/link';

@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import { Container, Typography, Box} from '@mui/material';
 import styles from '../../styles/Contact.module.css';
 import Link from 'next/link';

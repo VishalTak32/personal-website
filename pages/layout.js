@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Typography, Container, Link as MuiLink, Box } from '@mui/material';
+import { AppBar, Toolbar, Container, Link as MuiLink, Box } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styles from '../styles/layout.module.css';
