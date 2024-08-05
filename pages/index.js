@@ -4,11 +4,13 @@ import About from './components/about';
 import Contact from './components/contact';
 import Experience from './experience';
 import styles from '../styles/Home.module.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect} from 'react';
+import { useRouter } from 'next/router';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
 export default function Home() {
   const [showUpButton, setShowUpButton] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,7 +24,15 @@ export default function Home() {
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (router.pathname === '/') {
+      history.pushState(null, null, `/`);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      router.push('/').then(() => {
+        history.pushState(null, null, `/`);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
   };
 
   return (
