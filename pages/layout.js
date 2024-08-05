@@ -2,6 +2,7 @@ import { AppBar, Toolbar, Container, Link as MuiLink, Box } from '@mui/material'
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styles from '../styles/layout.module.css';
+import { Analytics } from "@vercel/analytics/react"
 
 export default function Layout({ children }) {
   const router = useRouter();
@@ -78,6 +79,7 @@ export default function Layout({ children }) {
         }}
       >
         {children}
+        <Analytics />
       </Container>
     </div>
   );
