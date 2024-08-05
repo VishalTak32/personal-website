@@ -5,6 +5,7 @@
     color: #64a0cd; /* Assuming you want white text */
     font-weight: bold;
     font-size: .8rem;
+    font-family: 'Nunito', sans-serif;
   }
   
   .link {
@@ -33,6 +34,7 @@
       color: #64a0cd; /* Assuming you want white text */
       font-weight: bold;
       font-size: .7rem;
+      font-family: 'Nunito', sans-serif;
     }
   }
   

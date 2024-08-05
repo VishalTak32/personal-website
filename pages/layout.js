@@ -55,17 +55,17 @@ export default function Layout({ children }) {
         }}>
           <Box sx={{ display: 'flex', gap: 5 }}>
             <Link href="#about" passHref scroll={false} className={styles.link}> 
-              <MuiLink color="inherit"  sx={{ textDecoration: 'none' }} onClick={(e) => handleNavClick(e, 'about', 'experience')}>
+              <MuiLink color="inherit"  sx={{ textDecoration: 'none' }} className={styles.link} onClick={(e) => handleNavClick(e, 'about', 'experience')}>
                 About
               </MuiLink>
             </Link>
             <Link href="#experience" passHref scroll={false} className={styles.link}>
-              <MuiLink color="inherit" sx={{ textDecoration: 'none' }} onClick={(e) => handleNavClick(e, 'experience', 'contact')}>
+              <MuiLink color="inherit" sx={{ textDecoration: 'none' }} className={styles.link} onClick={(e) => handleNavClick(e, 'experience', 'contact')}>
                 Experience
               </MuiLink>
             </Link>
             <Link href="#contact" passHref scroll={false} className={styles.link}>
-              <MuiLink color="inherit" sx={{ textDecoration: 'none' }} onClick={(e) => handleNavClick(e, 'contact', null)}>
+              <MuiLink color="inherit" sx={{ textDecoration: 'none' }} className={styles.link} onClick={(e) => handleNavClick(e, 'contact', null)}>
                 Contact
               </MuiLink>
             </Link>

@@ -1,11 +1,30 @@
 import Head from 'next/head';
-import { Container, Typography, Box } from '@mui/material';
+import { Container, Typography, Box, Fab } from '@mui/material';
 import About from './components/about';
 import Contact from './components/contact';
-import styles from '../styles/Home.module.css';
 import Experience from './experience';
+import styles from '../styles/Home.module.css';
+import { useState, useEffect } from 'react';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
 export default function Home() {
+  const [showUpButton, setShowUpButton] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const bottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight;
+      setShowUpButton(bottom);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <Container>
       <Head>
@@ -43,6 +62,16 @@ export default function Home() {
         <Box id="contact">
           <Contact />
         </Box>
+        {showUpButton && (
+          <Fab
+            color="primary"
+            aria-label="up"
+            onClick={scrollToTop}
+            className={styles.upButton}
+          >
+            <ArrowUpwardIcon />
+          </Fab>
+        )}
       </main>
     </Container>
   );

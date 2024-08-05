@@ -3,7 +3,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Nunito', sans-serif;
   background-color: #121212;
   color: #ffffff;
 }
@@ -19,6 +19,6 @@ nav a:hover {
   padding: 5px;
 }
 .MuiTypography-root{
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Nunito', sans-serif;
   color: #d3d3d3;
 }
