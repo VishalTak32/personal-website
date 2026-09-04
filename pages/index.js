@@ -3,6 +3,7 @@ import { Container, Typography, Box, Fab } from '@mui/material';
 import About from './components/about';
 import Contact from './components/contact';
 import Experience from './experience';
+import FadeInSection from './components/FadeInSection';
 import styles from '../styles/Home.module.css';
 import { useState, useEffect} from 'react';
 import { useRouter } from 'next/router';
@@ -14,9 +15,7 @@ export default function Home() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const bottom =
-        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight;
-      setShowUpButton(bottom);
+      setShowUpButton(window.scrollY > 400);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -38,8 +37,21 @@ export default function Home() {
   return (
     <Container>
       <Head>
-        <title>Vishal Tak - Software Developer</title>
-        <meta name="description" content="Vishal Tak's personal portfolio website" />
+        <title>Vishal Tak - Senior Software Engineer</title>
+        <meta
+          name="description"
+          content="Vishal Tak — Senior Software Engineer at Capital One building distributed systems, backend platforms, and applied AI/GenAI tooling."
+        />
+        <meta property="og:title" content="Vishal Tak - Senior Software Engineer" />
+        <meta
+          property="og:description"
+          content="Senior Software Engineer at Capital One building distributed systems, backend platforms, and applied AI/GenAI tooling."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://vishal-tak.com" />
+        <meta property="og:image" content="https://vishal-tak.com/profile-pic.jpeg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <link rel="canonical" href="https://vishal-tak.com" />
       </Head>
       <main>
         <Box className={styles.container}>
@@ -63,15 +75,15 @@ export default function Home() {
           </Box>
           <Box className={styles.background} />
         </Box>
-        <Box id="about" className={styles.aboutSection}>
+        <FadeInSection id="about" className={styles.aboutSection}>
           <About />
-        </Box>
-        <Box id="experience" className={styles.experienceSection}>
+        </FadeInSection>
+        <FadeInSection id="experience" className={styles.experienceSection}>
           <Experience />
-        </Box>
-        <Box id="contact">
+        </FadeInSection>
+        <FadeInSection id="contact">
           <Contact />
-        </Box>
+        </FadeInSection>
         {showUpButton && (
           <Fab
             color="primary"
