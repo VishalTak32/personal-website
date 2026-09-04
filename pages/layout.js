@@ -1,5 +1,5 @@
+import { useEffect, useState } from 'react';
 import { AppBar, Toolbar, Container, Link as MuiLink, Box } from '@mui/material';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styles from '../styles/layout.module.css';
 import { Analytics } from "@vercel/analytics/react"
@@ -7,6 +7,13 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export default function Layout({ children }) {
   const router = useRouter();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const handleNavClick = (e, section, section2) => {
     e.preventDefault();
@@ -49,28 +56,52 @@ export default function Layout({ children }) {
 
   return (
     <div>
-      <AppBar position="fixed" sx={{ backgroundImage: 'none', boxShadow: 'none', width: '100%', top: 0, left: 0 }}>
+      <AppBar
+        position="fixed"
+        sx={{
+          backgroundImage: 'none',
+          boxShadow: 'none',
+          width: '100%',
+          top: 0,
+          left: 0,
+          backgroundColor: scrolled ? 'rgba(18, 18, 18, 0.85)' : 'transparent',
+          backdropFilter: scrolled ? 'blur(10px)' : 'none',
+          transition: 'background-color 0.3s ease, backdrop-filter 0.3s ease',
+        }}
+      >
         <Toolbar sx={{ justifyContent: 'right', 
           '@media (max-width: 600px)': {
             justifyContent: 'center'
           },
         }}>
           <Box sx={{ display: 'flex', gap: 5 }}>
-            <Link href="#about" passHref scroll={false} className={styles.link}> 
-              <MuiLink color="inherit"  sx={{ textDecoration: 'none' }} className={styles.link} onClick={(e) => handleNavClick(e, 'about', 'experience')}>
-                About
-              </MuiLink>
-            </Link>
-            <Link href="#experience" passHref scroll={false} className={styles.link}>
-              <MuiLink color="inherit" sx={{ textDecoration: 'none' }} className={styles.link} onClick={(e) => handleNavClick(e, 'experience', 'contact')}>
-                Experience
-              </MuiLink>
-            </Link>
-            <Link href="#contact" passHref scroll={false} className={styles.link}>
-              <MuiLink color="inherit" sx={{ textDecoration: 'none' }} className={styles.link} onClick={(e) => handleNavClick(e, 'contact', null)}>
-                Contact
-              </MuiLink>
-            </Link>
+            <MuiLink
+              href="#about"
+              color="inherit"
+              sx={{ textDecoration: 'none' }}
+              className={styles.link}
+              onClick={(e) => handleNavClick(e, 'about', 'experience')}
+            >
+              About
+            </MuiLink>
+            <MuiLink
+              href="#experience"
+              color="inherit"
+              sx={{ textDecoration: 'none' }}
+              className={styles.link}
+              onClick={(e) => handleNavClick(e, 'experience', 'contact')}
+            >
+              Experience
+            </MuiLink>
+            <MuiLink
+              href="#contact"
+              color="inherit"
+              sx={{ textDecoration: 'none' }}
+              className={styles.link}
+              onClick={(e) => handleNavClick(e, 'contact', null)}
+            >
+              Contact
+            </MuiLink>
           </Box>
         </Toolbar>
       </AppBar>
