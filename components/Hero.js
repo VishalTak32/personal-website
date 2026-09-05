@@ -1,7 +1,7 @@
 import styles from '../styles/Hero.module.css';
 
 const QUICK_FACTS = [
-  { label: 'Based in', value: 'Austin, TX' },
+  { label: 'Based in', value: 'Frisco, TX' },
   { label: 'Focus', value: 'Distributed systems, applied AI' },
   { label: 'Currently building', value: 'Approval & workflow platforms', live: true },
 ];
