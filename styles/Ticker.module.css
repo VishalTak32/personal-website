@@ -1,0 +1,56 @@
+.ticker {
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  overflow: hidden;
+  padding: 16px 0;
+  margin-top: 30px;
+  white-space: nowrap;
+}
+
+.track {
+  display: inline-flex;
+  gap: 46px;
+  padding-right: 46px;
+  animation: slide 34s linear infinite;
+  will-change: transform;
+}
+
+.ticker:hover .track {
+  animation-play-state: paused;
+}
+
+.track span {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+.hot {
+  color: var(--accent);
+}
+
+@keyframes slide {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .track {
+    gap: 30px;
+    padding-right: 30px;
+    /* shorter loop on small screens so it never feels stalled */
+    animation-duration: 24s;
+  }
+  .track span {
+    font-size: 18px;
+  }
+}
