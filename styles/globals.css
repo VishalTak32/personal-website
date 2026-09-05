@@ -1,15 +1,42 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap');
+/* Fonts are loaded via <link> in pages/_document.js — faster than @import. */
+:root {
+  --bg: #ede3d1;
+  --bg-2: #e3d5b8;
+  --ink: #241f18;
+  --muted: #6d6353;
+  --accent: #b9791f;
+  --card: #221d16;
+  --card-text: #f2ead9;
+  --card-muted: #a89b85;
+  --card-line: #3a352a;
+  --rule: #cfc0a1;
 
-*, *::before, *::after {
+  --font-display: 'Big Shoulders Display', 'Arial Narrow', sans-serif;
+  --font-body: 'Work Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  --wrap: 1040px;
+  --pad: 40px;
+}
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Nunito', sans-serif;
-  background-color: #121212;
-  color: #ffffff;
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
@@ -17,12 +44,75 @@ a {
   text-decoration: none;
 }
 
-nav a:hover {
-  border: 2px solid #ffffff;
-  border-radius: 4px;
-  padding: 5px;
+img {
+  max-width: 100%;
 }
-.MuiTypography-root{
-  font-family: 'Nunito', sans-serif;
-  color: #d3d3d3;
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.wrap {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+
+section[id] {
+  scroll-margin-top: 88px; /* nav height (68px) + breathing room */
+}
+
+/* Shared scroll-reveal utility (see components/Reveal.js).
+   Kept to opacity + translate only: both are composited, so revealing a
+   section never forces the browser to re-layout mid-scroll. */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition: opacity 0.55s cubic-bezier(0.2, 0.75, 0.25, 1),
+    transform 0.55s cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+/* Drop the compositing hint once the transition has run its course. */
+.reveal.is-settled {
+  will-change: auto;
+}
+
+.reveal.delay-1.is-visible { transition-delay: 0.07s; }
+
+@media (max-width: 760px) {
+  :root { --pad: 22px; }
+  section[id] { scroll-margin-top: 76px; }
+}
+
+@media (max-width: 400px) {
+  :root { --pad: 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal,
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

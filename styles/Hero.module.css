@@ -1,0 +1,170 @@
+.hero {
+  padding-top: 90px;
+  padding-bottom: 70px;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 18px;
+}
+
+.giant {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.7rem, 13vw, 7.4rem);
+  line-height: 0.86;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  margin: 0 0 30px;
+}
+
+/* Each word sits in a mask and wipes up into place on load */
+.mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  /* a little slack so nothing clips while the webfont swaps in */
+  padding-bottom: 0.06em;
+  margin-bottom: -0.06em;
+}
+
+.word {
+  display: inline-block;
+  transform: translateY(105%);
+  animation: wipeUp 0.85s cubic-bezier(0.16, 0.84, 0.24, 1) 0.12s forwards;
+}
+
+.wordAccent {
+  color: var(--accent);
+  animation-delay: 0.24s;
+}
+
+@keyframes wipeUp {
+  to {
+    transform: translateY(0);
+  }
+}
+
+.seq1,
+.seq2,
+.seq3 {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: seqIn 0.75s cubic-bezier(0.2, 0.75, 0.25, 1) forwards;
+}
+
+.seq1 { animation-delay: 0.05s; }
+.seq2 { animation-delay: 0.42s; }
+.seq3 { animation-delay: 0.54s; }
+
+@keyframes seqIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.row {
+  display: flex;
+  gap: 60px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.positioning {
+  max-width: 44ch;
+  min-width: 0;
+  font-size: 19px;
+  margin: 0;
+}
+
+.positioning strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.facts {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  margin: 0;
+  padding-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.fact dt {
+  margin: 0;
+}
+
+.fact dd {
+  margin: 2px 0 0;
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.live {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-right: 7px;
+  vertical-align: middle;
+  animation: blip 2.6s ease-in-out infinite;
+}
+
+@keyframes blip {
+  0%,
+  100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word,
+  .seq1,
+  .seq2,
+  .seq3 {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .live {
+    animation: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .hero {
+    padding-top: 56px;
+    padding-bottom: 46px;
+  }
+  .row {
+    gap: 30px;
+  }
+  .positioning {
+    font-size: 17px;
+  }
+  .giant {
+    margin-bottom: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .eyebrow {
+    font-size: 11.5px;
+  }
+  .positioning {
+    font-size: 16px;
+  }
+  .facts {
+    font-size: 12px;
+  }
+}
