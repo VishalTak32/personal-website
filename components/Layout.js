@@ -59,7 +59,7 @@ export default function Layout({ children }) {
 
       <footer className={styles.footer}>
         <span suppressHydrationWarning>© {new Date().getFullYear()} Vishal Tak</span>
-        <span>Austin, TX</span>
+        <span>Frisco, TX</span>
       </footer>
 
       <Analytics />
