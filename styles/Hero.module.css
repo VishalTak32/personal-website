@@ -101,6 +101,47 @@
   animation-delay: 0.24s;
 }
 
+/* The surname is filled with the same node-graph motif that runs behind the
+   page. The texture is transparent with dark translucent marks, layered over
+   a solid --accent, so one file works in both themes and the glyphs never
+   drift far from the accent's own luminance. Guarded: without background-clip
+   support the text would clip to nothing and vanish. */
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .wordAccent {
+    color: transparent;
+    background-color: var(--accent);
+    background-image: url('/name-graph.png');
+    background-size: cover;
+    background-position: center;
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  /* On the dark ground the same dark marks push the glyph the wrong way:
+     the fill measures 2.36:1 against #201b14, under the 3:1 floor for large
+     text. A translucent accent wash over the texture lifts it back to 4.4:1
+     while keeping the motif readable. Cheaper than a second asset. */
+  :global([data-theme='dark']) .wordAccent {
+    background-image: linear-gradient(
+        rgba(220, 154, 55, 0.5),
+        rgba(220, 154, 55, 0.5)
+      ),
+      url('/name-graph.png');
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    :global(:root:not([data-theme='light'])) .wordAccent {
+      background-image: linear-gradient(
+          rgba(220, 154, 55, 0.5),
+          rgba(220, 154, 55, 0.5)
+        ),
+        url('/name-graph.png');
+    }
+  }
+}
+
 @keyframes wipeUp {
   to {
     transform: translateY(0);
