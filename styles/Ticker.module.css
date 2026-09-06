@@ -1,9 +1,12 @@
 .ticker {
+  /* Above the inline node canvas that sits behind the Work section. */
+  position: relative;
+  z-index: 1;
   border-top: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
   overflow: hidden;
   padding: 16px 0;
-  margin-top: 30px;
+  margin-top: 24px;
   white-space: nowrap;
 }
 
@@ -51,6 +54,10 @@
     animation-duration: 24s;
   }
   .track span {
-    font-size: 18px;
+    /* 19px, not 18px: at >=18.66px with a bold weight this counts as large
+       text, so it needs 3:1 rather than 4.5:1 against the node field behind
+       it. --muted measures 3.75:1 over a field mark, which clears 3 but not
+       4.5. */
+    font-size: 19px;
   }
 }

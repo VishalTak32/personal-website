@@ -1,7 +1,17 @@
+/* Zero-height marker at the very top of the document. The nav watches this
+   with an IntersectionObserver instead of listening to scroll (see Layout.js). */
+.sentinel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1px;
+  width: 1px;
+  pointer-events: none;
+}
+
 /* The height here is deliberately fixed. Shrinking the bar when it sticks
-   changes document height, which nudges scrollY, which can re-cross the
-   stick threshold — that feedback loop is what made the page flicker just
-   below the top of the scroll. Only paint-level properties change now. */
+   changes document height, which nudges scroll position, which can re-cross
+   the threshold. Only paint-level properties change. */
 .nav {
   position: sticky;
   top: 0;
@@ -10,16 +20,16 @@
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  height: 68px;
+  height: var(--nav);
   padding: 0 var(--pad);
   background: var(--bg);
   border-bottom: 1px solid transparent;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.4s ease;
 }
 
 .stuck {
   border-bottom-color: var(--rule);
-  box-shadow: 0 1px 20px rgba(36, 31, 24, 0.06);
+  box-shadow: 0 1px 20px var(--scrim);
 }
 
 .mark {
@@ -32,7 +42,7 @@
 .links {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 28px;
 }
 
 .link {
@@ -56,7 +66,7 @@
 }
 
 .link:hover {
-  color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .link:hover::after {
@@ -71,12 +81,32 @@
   color: var(--bg);
   padding: 9px 16px;
   border: 1px solid var(--ink);
+  white-space: nowrap;
   transition: background 0.25s ease, color 0.25s ease;
 }
 
 .cta:hover {
   background: transparent;
   color: var(--ink);
+}
+
+.toggle {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex: none;
+  padding: 0;
+  background: none;
+  border: 1px solid var(--rule);
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color 0.25s ease, color 0.25s ease;
+}
+
+.toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .footer {
@@ -92,9 +122,6 @@
 }
 
 @media (max-width: 760px) {
-  .nav {
-    height: 60px;
-  }
   .links {
     gap: 18px;
   }
@@ -107,9 +134,8 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 520px) {
   .nav {
-    height: 56px;
     gap: 12px;
   }
   .links {
@@ -125,14 +151,19 @@
   .mark {
     font-size: 19px;
   }
+  .toggle {
+    width: 30px;
+    height: 30px;
+  }
   .footer {
     flex-direction: column;
     gap: 6px;
   }
 }
 
-/* Below this the four nav items stop fitting beside the wordmark. */
-@media (max-width: 360px) {
+/* Below this the wordmark, four items and the toggle stop fitting on one line.
+   The wordmark is the one that can go: the whole bar already links home. */
+@media (max-width: 400px) {
   .mark {
     display: none;
   }

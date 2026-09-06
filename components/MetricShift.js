@@ -1,7 +1,7 @@
 import styles from '../styles/Work.module.css';
 
 /**
- * A before → after metric. Both states stay on screen permanently so the
+ * A before/after metric. Both states stay on screen permanently so the
  * comparison still reads once any animation has finished.
  */
 export default function MetricShift({ before, after }) {

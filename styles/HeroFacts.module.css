@@ -1,0 +1,101 @@
+/* A rail, not a strip: one vertical spine with each fact hung off it as a
+   horizontal row. The spine is drawn on the list rather than per-item so it
+   runs unbroken between the markers. */
+.rail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 34px;
+  margin: 0;
+  padding-left: 30px;
+  border-left: 1px solid var(--rule);
+  min-width: 0;
+  opacity: 0;
+  transform: translateY(14px);
+  animation: railIn 0.8s cubic-bezier(0.2, 0.75, 0.25, 1) 0.62s forwards;
+}
+
+@keyframes railIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fact {
+  position: relative;
+  min-width: 0;
+}
+
+/* Marker sits centred on the spine. Square, matching the page's zero-radius
+   shape system and the nodes in the background field. */
+.fact::before {
+  content: '';
+  position: absolute;
+  left: -35px;
+  top: 5px;
+  width: 9px;
+  height: 9px;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  transition: background-color 0.4s ease, border-color 0.4s ease;
+}
+
+/* The one fact that is a live state rather than a standing attribute gets the
+   filled marker, and the only pulse on the page. */
+.live::before {
+  background: var(--accent);
+  border-color: var(--accent);
+  animation: blip 2.6s ease-in-out infinite;
+}
+
+@keyframes blip {
+  0%,
+  100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.fact dt {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin: 0 0 5px;
+}
+
+.fact dd {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  max-width: 26ch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rail {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .live::before {
+    animation: none;
+  }
+}
+
+/* Under the split the rail sits below the copy, with a little more air above
+   it so it does not crowd the CTAs. */
+@media (max-width: 1000px) {
+  .rail {
+    gap: 26px;
+    padding-left: 26px;
+  }
+  .fact::before {
+    left: -31px;
+  }
+}
+
+@media (max-width: 480px) {
+  .fact dd {
+    font-size: 15.5px;
+  }
+}

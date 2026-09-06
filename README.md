@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# vishal-tak.com
 
-## Getting Started
+Personal site and portfolio. Next.js (Pages Router), CSS Modules, no UI framework.
 
-First, run the development server:
+## Running it
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+npm run build   # production build
+npm run start   # serve the production build
+npm run lint
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Layout
 
-## Learn More
+```
+pages/
+  _app.js        next/font setup, injects --font-* custom properties
+  _document.js   theme no-flash script, favicon, theme-color
+  index.js       the single page: metadata, JSON-LD, section order
+components/      one component per section, plus shared behaviour
+styles/          globals.css holds the tokens, one CSS Module per component
+public/          og.jpg (link previews), resume.pdf, robots.txt, sitemap.xml
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Design tokens
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Everything visual is driven by custom properties in `styles/globals.css`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- `--accent` (`#b07419`) is the brand ochre, used for fills, rules, and large
+  display type. It is the original `#b9791f` darkened by about 4%: at the
+  source value the accent surname measured 2.84:1 on the sand ground, just
+  under the 3:1 floor for large text. It now measures 3.08:1.
+- `--accent-ink` (`#8a560f`) is the same hue taken further down to clear 4.5:1
+  for body-size text. Small accent-coloured text uses this one.
 
-## Deploy on Vercel
+Dark mode is defined twice on purpose: once under `prefers-color-scheme` for
+visitors who have never chosen, and once under `[data-theme="dark"]` for those
+who have used the toggle. The choice is stored in `localStorage` and applied by
+an inline script in `_document.js` before first paint.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Things worth knowing before editing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **Fonts** come from `next/font` and are self-hosted. Do not add a
+  `fonts.googleapis.com` link tag; it reintroduces a render-blocking round trip.
+- **The nav's stuck state** is driven by an IntersectionObserver on a sentinel
+  element, not a scroll listener.
+- **The case studies are a sticky stack.** The cards must keep an opaque
+  background or pinned cards show through each other. The stack degrades to
+  normal flow below 760px and under `prefers-reduced-motion`.
+- **Motion is opt-out everywhere.** Every animation has a
+  `prefers-reduced-motion: reduce` branch.
+- **`components/NodeField.js`** draws the background graph. Above 1120px it is
+  a fixed canvas masked to the margins *outside* the reading column; below that
+  it moves inside the Work section, where the case cards are opaque. Both
+  placements exist so no field mark ever lands behind accent-coloured text,
+  which would push it under its contrast floor.
+- **The hero parallax** is a native CSS scroll-driven animation
+  (`animation-timeline: scroll(root block)`), not a scroll listener. Browsers
+  without support simply get no parallax.
+- **`public/profile-pic.jpeg` is unreferenced.** Nothing on the site uses it
+  since the portrait came out of the hero. Safe to delete.
+
+## Deploying
+
+Deployed on Vercel. Pushing to `main` ships it.

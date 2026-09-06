@@ -1,3 +1,4 @@
+import { ArrowRight } from '@phosphor-icons/react';
 import Reveal from './Reveal';
 import styles from '../styles/Contact.module.css';
 
@@ -13,18 +14,19 @@ export default function Contact() {
 
         <Reveal className={styles.actions} delay={1}>
           <a className={styles.solid} href="mailto:vishal.tak14@gmail.com">
-            Email me <span className={styles.arrow}>→</span>
+            Email me
+            <ArrowRight size={15} weight="bold" className={styles.arrow} />
           </a>
           <a
-            className={styles.line}
+            className={styles.ghost}
             href="/resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
           >
-            View résumé
+            Résumé
           </a>
           <a
-            className={styles.line}
+            className={styles.ghost}
             href="https://www.linkedin.com/in/vishal-tak14/"
             target="_blank"
             rel="noopener noreferrer"
