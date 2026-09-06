@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
  * Reveals its children as they scroll into view.
  *
  * The observer fires ~140px *before* the element reaches the viewport, so the
- * fade is already underway by the time you can see it — triggering exactly at
+ * fade is already underway by the time you can see it. Triggering exactly at
  * the edge is what makes reveals look like they pop or stutter. Falls back to
  * visible when IntersectionObserver is missing, and is disabled entirely under
  * prefers-reduced-motion (see globals.css).

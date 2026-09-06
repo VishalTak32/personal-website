@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import NodeField from './NodeField';
+import ThemeToggle from './ThemeToggle';
 import styles from '../styles/Layout.module.css';
 
 const NAV_LINKS = [
@@ -10,30 +12,37 @@ const NAV_LINKS = [
 ];
 
 export default function Layout({ children }) {
+  const sentinel = useRef(null);
   const [stuck, setStuck] = useState(false);
 
+  /**
+   * The nav's stuck state is driven by a zero-height sentinel sitting at the
+   * top of the document rather than by a scroll listener. The observer fires
+   * twice per page life instead of on every frame, and it cannot oscillate
+   * around a threshold the way a scrollY comparison can.
+   */
   useEffect(() => {
-    let frame = null;
-    const read = () => {
-      frame = null;
-      // Separate on/off thresholds: once stuck it takes a real scroll back up
-      // to unstick, so hovering around a single boundary can't oscillate.
-      setStuck((prev) => (prev ? window.scrollY > 8 : window.scrollY > 36));
-    };
-    // Coalesce scroll events into one read per frame.
-    const onScroll = () => {
-      if (frame === null) frame = requestAnimationFrame(read);
-    };
-    read();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      if (frame !== null) cancelAnimationFrame(frame);
-    };
+    const node = sentinel.current;
+    if (!node || !('IntersectionObserver' in window)) return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setStuck(!entry.isIntersecting),
+      { threshold: 0 }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
   }, []);
 
   return (
     <>
+      <a className="skip" href="#main">
+        Skip to content
+      </a>
+
+      <div ref={sentinel} className={styles.sentinel} aria-hidden="true" />
+
+      <NodeField />
+
       <header className={`${styles.nav} ${stuck ? styles.stuck : ''}`}>
         <a className={styles.mark} href="#top" aria-label="Back to top">
           VT/
@@ -50,12 +59,16 @@ export default function Layout({ children }) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Résumé ↓
+            Résumé
           </a>
+          <ThemeToggle />
         </nav>
       </header>
 
-      <main id="top">{children}</main>
+      <main id="main">
+        <span id="top" />
+        {children}
+      </main>
 
       <footer className={styles.footer}>
         <span suppressHydrationWarning>© {new Date().getFullYear()} Vishal Tak</span>

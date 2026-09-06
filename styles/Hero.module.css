@@ -1,6 +1,65 @@
+/* Split: copy on the left, the standing facts as a rail on the right.
+   min-height uses dvh, not vh, so the iOS address bar collapsing cannot push
+   the CTAs out of the first screen, and it is capped under a full screen so
+   the hero does not open on a lake of empty space on a tall monitor. */
 .hero {
-  padding-top: 90px;
-  padding-bottom: 70px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+  gap: 56px;
+  align-items: center;
+  padding-top: 56px;
+  padding-bottom: 52px;
+  min-height: min(620px, calc(100dvh - var(--nav)));
+}
+
+.copy {
+  min-width: 0;
+}
+
+.railWrap {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+}
+
+/* Hero parallax.
+
+   The two columns ride the page scroll at slightly different rates, so the
+   hero recedes rather than simply sliding away. Driven by a native CSS
+   scroll-driven animation rather than a scroll listener: it runs off the main
+   thread, needs no JavaScript, and costs nothing on browsers that lack it,
+   which simply get no parallax.
+
+   Transform only, no opacity. Fading text that is still partly on screen
+   would quietly drop it under its contrast floor for anyone who stops
+   mid-scroll, and the movement alone reads as depth. */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .copy,
+    .railWrap {
+      animation: heroDrift linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 620px;
+      will-change: transform;
+    }
+
+    .railWrap {
+      animation-name: heroDriftFar;
+    }
+  }
+}
+
+@keyframes heroDrift {
+  to {
+    transform: translate3d(0, -48px, 0);
+  }
+}
+
+@keyframes heroDriftFar {
+  to {
+    transform: translate3d(0, -84px, 0);
+  }
 }
 
 .eyebrow {
@@ -8,21 +67,20 @@
   font-size: 12.5px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-ink);
   margin: 0 0 18px;
 }
 
 .giant {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: clamp(2.7rem, 13vw, 7.4rem);
-  line-height: 0.86;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-  margin: 0 0 30px;
+  font-size: clamp(3rem, 7.4vw, 6.4rem);
+  line-height: 0.84;
+  letter-spacing: -0.012em;
+  margin: 0 0 26px;
 }
 
-/* Each word sits in a mask and wipes up into place on load */
+/* Each word sits in a mask and wipes up into place on load. */
 .mask {
   display: inline-block;
   overflow: hidden;
@@ -43,10 +101,119 @@
   animation-delay: 0.24s;
 }
 
+/* The surname is filled with the same node-graph motif that runs behind the
+   page. The texture is transparent with dark translucent marks, layered over
+   a solid --accent, so one file works in both themes and the glyphs never
+   drift far from the accent's own luminance. Guarded: without background-clip
+   support the text would clip to nothing and vanish. */
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .wordAccent {
+    color: transparent;
+    background-color: var(--accent);
+    background-image: url('/name-graph.png');
+    background-size: cover;
+    background-position: center;
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  /* On the dark ground the same dark marks push the glyph the wrong way:
+     the fill measures 2.36:1 against #201b14, under the 3:1 floor for large
+     text. A translucent accent wash over the texture lifts it back to 4.4:1
+     while keeping the motif readable. Cheaper than a second asset. */
+  :global([data-theme='dark']) .wordAccent {
+    background-image: linear-gradient(
+        rgba(220, 154, 55, 0.5),
+        rgba(220, 154, 55, 0.5)
+      ),
+      url('/name-graph.png');
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    :global(:root:not([data-theme='light'])) .wordAccent {
+      background-image: linear-gradient(
+          rgba(220, 154, 55, 0.5),
+          rgba(220, 154, 55, 0.5)
+        ),
+        url('/name-graph.png');
+    }
+  }
+}
+
 @keyframes wipeUp {
   to {
     transform: translateY(0);
   }
+}
+
+.positioning {
+  max-width: 50ch;
+  font-size: 19px;
+  margin: 0 0 32px;
+}
+
+.positioning strong {
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.solid {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 14px 26px;
+  border: 1px solid var(--ink);
+  white-space: nowrap;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.12s ease;
+}
+
+.solid:hover {
+  background: transparent;
+  color: var(--ink);
+}
+
+.solid:active {
+  transform: translateY(1px);
+}
+
+.arrow {
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.solid:hover .arrow {
+  transform: translateX(4px);
+}
+
+.ghost {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  padding: 14px 24px;
+  border: 1px solid var(--rule);
+  white-space: nowrap;
+  transition: border-color 0.25s ease, transform 0.12s ease;
+}
+
+.ghost:hover {
+  border-color: var(--ink);
+}
+
+.ghost:active {
+  transform: translateY(1px);
 }
 
 .seq1,
@@ -68,65 +235,6 @@
   }
 }
 
-.row {
-  display: flex;
-  gap: 60px;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: space-between;
-}
-
-.positioning {
-  max-width: 44ch;
-  min-width: 0;
-  font-size: 19px;
-  margin: 0;
-}
-
-.positioning strong {
-  color: var(--accent);
-  font-weight: 600;
-}
-
-.facts {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  min-width: 0;
-  margin: 0;
-  padding-top: 6px;
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  color: var(--muted);
-}
-
-.fact dt {
-  margin: 0;
-}
-
-.fact dd {
-  margin: 2px 0 0;
-  color: var(--ink);
-  font-size: 14px;
-}
-
-.live {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent);
-  margin-right: 7px;
-  vertical-align: middle;
-  animation: blip 2.6s ease-in-out infinite;
-}
-
-@keyframes blip {
-  0%,
-  100% { opacity: 1; }
-  50% { opacity: 0.25; }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .word,
   .seq1,
@@ -136,24 +244,24 @@
     opacity: 1;
     transform: none;
   }
-  .live {
-    animation: none;
+}
+
+@media (max-width: 1000px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 38px;
+    min-height: 0;
+    padding-top: 52px;
   }
 }
 
 @media (max-width: 760px) {
   .hero {
-    padding-top: 56px;
-    padding-bottom: 46px;
-  }
-  .row {
-    gap: 30px;
+    padding-top: 44px;
+    padding-bottom: 44px;
   }
   .positioning {
     font-size: 17px;
-  }
-  .giant {
-    margin-bottom: 24px;
   }
 }
 
@@ -164,7 +272,12 @@
   .positioning {
     font-size: 16px;
   }
-  .facts {
-    font-size: 12px;
+  .actions {
+    gap: 12px;
+  }
+  .solid,
+  .ghost {
+    flex: 1 1 auto;
+    justify-content: center;
   }
 }

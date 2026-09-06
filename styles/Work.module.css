@@ -1,20 +1,24 @@
 .work {
-  padding-top: 70px;
-  padding-bottom: 70px;
-}
-
-.sectionLabel {
   position: relative;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 34px;
-  padding-bottom: 14px;
+  padding-top: 96px;
 }
 
-.sectionLabel::after {
+/* Everything in this section paints above the inline node canvas, which is a
+   positioned first child at z-index 0. The ticker carries its own rule in
+   Ticker.module.css, where its class actually lives. */
+.head,
+.stack {
+  position: relative;
+  z-index: 1;
+}
+
+.head {
+  position: relative;
+  padding-bottom: 14px;
+  margin-bottom: 38px;
+}
+
+.head::after {
   content: '';
   position: absolute;
   left: 0;
@@ -27,63 +31,85 @@
   transition: transform 0.9s cubic-bezier(0.16, 0.84, 0.24, 1);
 }
 
-.sectionLabel:global(.is-visible)::after {
+.head:global(.is-visible)::after {
   transform: scaleX(1);
 }
 
 .sectionTitle {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(1.9rem, 4vw, 2.6rem);
-  text-transform: uppercase;
+  font-size: clamp(2rem, 4.4vw, 2.9rem);
   margin: 0;
 }
 
-.sectionNote {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--muted);
+/* Sticky stack. Each card pins just under the nav and the next one slides
+   over it, so a case study gets the viewport to itself without hijacking the
+   scrollbar. The staggered tops leave a sliver of the card underneath
+   visible, which is what makes it read as a stack rather than a swap.
+   Cards must stay fully opaque or the pinned card shows through. */
+.stack {
+  position: relative;
+  /* Room for the last card to clear before the stack's containing block ends.
+     Without it the second card gets nudged off its offset by a few pixels as
+     the block runs out, which reads as a small jitter on release. */
+  padding-bottom: 48px;
 }
 
 .case {
+  position: sticky;
+  top: calc(var(--nav) + 24px);
   display: grid;
-  grid-template-columns: 1fr 200px;
-  gap: 30px;
+  grid-template-columns: 1fr 240px;
+  gap: 34px;
   background: var(--card);
   color: var(--card-text);
-  padding: 34px 34px 30px;
-  margin-bottom: 22px;
-}
-
-.case {
+  padding: 38px 38px 34px;
+  margin-bottom: 26px;
+  box-shadow: 0 24px 60px -40px var(--scrim);
   transition: box-shadow 0.3s ease;
 }
 
-.case:hover {
-  box-shadow: 0 18px 40px -22px rgba(36, 31, 24, 0.55);
+.case:nth-child(2) {
+  top: calc(var(--nav) + 44px);
 }
 
-.tags {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin: 0 0 12px;
+.case:nth-child(3) {
+  top: calc(var(--nav) + 64px);
+}
+
+.case:hover {
+  box-shadow: 0 22px 46px -26px var(--scrim);
+}
+
+.caseTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--card-line);
+  padding-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .title {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: 26px;
-  text-transform: uppercase;
-  margin: 0 0 12px;
+  font-size: 27px;
+  color: var(--card-text);
+  margin: 0;
+}
+
+.year {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--card-muted);
+  white-space: nowrap;
 }
 
 .line {
   color: var(--card-muted);
   margin: 0 0 10px;
-  max-width: 56ch;
+  max-width: 58ch;
   font-size: 15.5px;
 }
 
@@ -92,14 +118,14 @@
   font-weight: 600;
 }
 
-.stack {
+.stackTags {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 16px;
+  margin-top: 18px;
 }
 
-.stack span {
+.stackTags span {
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--card-muted);
@@ -108,23 +134,24 @@
   transition: border-color 0.3s ease, color 0.3s ease;
 }
 
-.case:hover .stack span {
+.case:hover .stackTags span {
   border-color: #59503e;
   color: var(--card-text);
 }
 
 .metric {
   border-left: 1px solid var(--card-line);
-  padding-left: 26px;
+  padding-left: 28px;
+  min-width: 0;
 }
 
 .metricNum {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 42px;
+  font-size: 46px;
   line-height: 1;
   color: var(--accent);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   font-variant-numeric: tabular-nums;
 }
 
@@ -140,7 +167,7 @@
 .shiftBefore {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 22px;
+  font-size: 23px;
   line-height: 1.1;
   color: var(--card-muted);
   text-decoration: line-through;
@@ -159,7 +186,7 @@
 .shiftAfter {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 38px;
+  font-size: 40px;
   line-height: 1;
   color: var(--accent);
   text-transform: uppercase;
@@ -173,21 +200,31 @@
   margin: 0;
 }
 
-@media (max-width: 760px) {
-  .work {
-    padding-top: 56px;
-    padding-bottom: 56px;
-  }
+@media (max-width: 1000px) {
   .case {
     grid-template-columns: 1fr;
-    gap: 22px;
-    padding: 26px 22px 24px;
+    gap: 24px;
   }
   .metric {
     border-left: none;
     border-top: 1px solid var(--card-line);
     padding-left: 0;
-    padding-top: 16px;
+    padding-top: 18px;
+  }
+}
+
+/* Pinning tall cards on a phone hides more than it frames, so the stack
+   degrades to plain flow. */
+@media (max-width: 760px) {
+  .work {
+    padding-top: 64px;
+  }
+  .case,
+  .case:nth-child(2),
+  .case:nth-child(3) {
+    position: static;
+    top: auto;
+    padding: 26px 22px 24px;
   }
   .title {
     font-size: 23px;
@@ -196,28 +233,35 @@
     font-size: 15px;
   }
   .metricNum {
-    font-size: 38px;
+    font-size: 40px;
   }
   .shiftAfter {
     font-size: 34px;
   }
-  .sectionNote {
-    font-size: 11.5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case,
+  .case:nth-child(2),
+  .case:nth-child(3) {
+    position: static;
+    top: auto;
   }
 }
 
 @media (max-width: 480px) {
-  .sectionLabel {
-    gap: 6px;
-  }
   .case {
     padding: 22px 18px 20px;
+  }
+  .caseTop {
+    flex-direction: column;
+    gap: 4px;
   }
   .title {
     font-size: 21px;
   }
   .metricNum {
-    font-size: 34px;
+    font-size: 36px;
   }
   .shiftAfter {
     font-size: 30px;

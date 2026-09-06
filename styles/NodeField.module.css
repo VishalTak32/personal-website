@@ -1,0 +1,77 @@
+/* Fixed, so scrolling the page never repaints it, and inert to the pointer.
+   It sits above the html background and below every page layer (main, header
+   and footer all establish their own stacking context above z-index 0). */
+.field {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+
+  /* The field is masked out of the reading column.
+
+     This is a contrast rule, not a taste one. The page's accent-coloured text
+     (the hero eyebrow, the inline highlights, the accent surname) sits between
+     3.0:1 and 4.8:1 on the plain ground. Laying even a 12%-alpha mark behind
+     it drops those below the WCAG AA floor, and a background someone cannot
+     turn off is not a fair place to spend that margin. Outside the column
+     there is no text to interfere with, so the field runs at full strength
+     there and fades to nothing before it reaches any.
+
+     The stop is the wrap's outer edge plus its padding, which is exactly
+     where the leftmost glyph can land. Measured with 100%, not 100vw, because
+     100vw includes the scrollbar. The extra 24px covers the remaining gap:
+     this fixed canvas spans the full viewport while the page content centres
+     inside the narrower scrollable area, so the two midpoints differ by half
+     a scrollbar. Erring inward costs a sliver of field and guarantees no mark
+     ever lands behind a glyph. */
+  --edge: max(0px, calc((100% - var(--wrap)) / 2 + var(--pad) - 24px));
+  -webkit-mask-image: linear-gradient(
+    to right,
+    #000 0,
+    #000 calc(var(--edge) * 0.55),
+    transparent var(--edge),
+    transparent calc(100% - var(--edge)),
+    #000 calc(100% - var(--edge) * 0.55),
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    #000 0,
+    #000 calc(var(--edge) * 0.55),
+    transparent var(--edge),
+    transparent calc(100% - var(--edge)),
+    #000 calc(100% - var(--edge) * 0.55),
+    #000 100%
+  );
+}
+
+/* Below roughly the wrap width there are no margins left to hide in, so the
+   page-wide field steps aside and the inline one inside the Work section takes
+   over (see components/Work.js). */
+@media (max-width: 1120px) {
+  .field {
+    display: none;
+  }
+}
+
+/* Inline placement: fills the Work section, behind its content. The case cards
+   are opaque and the section heading is plain ink, so nothing accent-coloured
+   is ever read against it. The parent must be positioned. */
+.inline {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: none;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+@media (max-width: 1120px) {
+  .inline {
+    display: block;
+  }
+}

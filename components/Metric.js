@@ -14,7 +14,7 @@ function prefersReducedMotion() {
  *
  * The final value is what renders server-side, so crawlers and no-JS visitors
  * always see the real number. The count itself is written straight to the DOM
- * node rather than through state — re-rendering React 60x a second while the
+ * node rather than through state. Re-rendering React 60x a second while the
  * page is also scrolling is what makes this kind of counter feel janky.
  */
 export default function Metric({ value, suffix = '', className }) {
